@@ -23,10 +23,11 @@ GEM
     multi_xml (0.5.3)
     multipart-post (1.2.0)
     rack (1.4.1)
+    rack-cors (0.2.7)
+      rack
     sinatra (1.1.0)
       rack (~> 1.1)
       tilt (~> 1.1)
-    sinatra-cross_origin (0.2.0)
     thin (1.4.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -41,6 +42,6 @@ DEPENDENCIES
   google_places
   json
   log4r
+  rack-cors
   sinatra (= 1.1.0)
-  sinatra-cross_origin
   thin

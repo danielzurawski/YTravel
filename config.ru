@@ -2,7 +2,6 @@ require "rubygems"
 require "log4r"
 require "json"
 require 'sinatra'
-require 'sinatra/cross_origin'
 require "json"
 require "./lib/base/ytravel_controller"
 require "./lib/controllers/trip_controller"
@@ -10,11 +9,7 @@ require "./lib/controllers/landmark_controller"
 require "./lib/models/landmark"
 require "expedia"
 require "google_places"
-require "sinatra-jsonp"
-
-configure do
-  enable :cross_origin
-end
+require 'rack/cors'
 
 Expedia.cid = 55505
 Expedia.api_key = '5xw4cpaxzfbm23w57x2d486j'
@@ -45,6 +40,26 @@ Expedia.minor_rev = 13
 #file.formatter = Log4r::PatternFormatter.new(:pattern => "[%l] %d :: %m")
 
 #logger.outputters << file
+
+use Rack::Cors do
+	allow do
+    	origins 'localhost:3000', '127.0.0.1:3000',
+             	/http:\/\/192\.168\.0\.\d{1,3}(:\d+)?/
+             	# regular expressions can be used here
+
+     	resource '/file/list_all/', :headers => 'x-domain-token'
+     	resource '/file/at/*',
+         	:methods => [:get, :post, :put, :delete, :options],
+         	:headers => 'x-domain-token',
+         	:expose => ['Some-Custom-Response-Header']
+         	# headers to expose
+   	end
+
+    allow do
+		origins '*'
+    	resource '/public/*', :headers => :any, :methods => :get
+	end
+end
 
 run Sinatra::Application
 # Attach controllers
