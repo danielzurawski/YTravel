@@ -7,9 +7,12 @@ require "./lib/base/ytravel_controller"
 require "./lib/controllers/trip_controller"
 require "./lib/controllers/landmark_controller"
 require "./lib/models/landmark"
+require "./lib/models/google_api"
 require "expedia"
 require "google_places"
 require 'rack/cors'
+require 'google/api_client'
+require 'net/http'
 
 Expedia.cid = 55505
 Expedia.api_key = '5xw4cpaxzfbm23w57x2d486j'

@@ -22,10 +22,28 @@ module YTravel
 		end
 
 		def best_entries_for_period(data, start_date, end_date)
-			period = ((Time.at(end_date).to_date - Time.at(start_date).to_date).round * 24) / 2;
-			data.sort_by { |hsh| hsh[:rating] }
-			puts "Taking " + period.to_s + " entries."
-			data.take(period)
+			if Time.at(end_date) > Time.at(start_date)
+				period = ((Time.at(end_date).to_date - Time.at(start_date).to_date).round * 24) / 2;
+				data.sort_by { |hsh| [hsh[:rating] ? 0 : 1,hsh[:rating] || 0] }
+				
+				#for i in 0..data.size
+				#	for j in i+1..data.size
+				#		if j > data.size then
+				#			break
+				#		GoogleApi.new.calculate_distance(
+				#			data[i][:lat], data[i][:long],
+				#			data[j][:long], data[j][:long]
+				#		)
+				#	end
+				#end
+
+				#GoogleApi.new.calculate_distance(
+				#	data.first[:lat], data.first[:long], 
+				#	data[1][:lat], data[1][:long]
+				#)
+				puts "Taking " + period.to_s + " entries."
+				data.take(period)
+			end
 		end
 
 		def find_expedia_landmarks(data)
