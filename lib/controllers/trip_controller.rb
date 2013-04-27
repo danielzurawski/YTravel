@@ -5,7 +5,9 @@ module YTravel
 		end
 
 		post '/plan' do 
-			puts "data: " + params.to_s
+			lc = LandmarkController.new
+			landmarks = lc.find_landmarks(params)
+			landmarks.to_json
 		end
 	end
 end

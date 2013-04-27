@@ -5,7 +5,21 @@ require "sinatra"
 require "json"
 require "./lib/base/ytravel_controller"
 require "./lib/controllers/trip_controller"
+require "./lib/controllers/landmark_controller"
 require "./lib/models/landmark"
+require "expedia"
+require "google_places"
+require "mongoid"
+require "geocoder"
+
+
+Expedia.cid = 55505
+Expedia.api_key = '5xw4cpaxzfbm23w57x2d486j'
+Expedia.shared_secret = 'bUR9HreH'
+Expedia.locale = 'en_US'
+Expedia.currency_code = 'USD'
+Expedia.minor_rev = 13
+Mongoid.load!('config/mongoid.yml')
 
 #APP_ROOT = File.dirname(__FILE__)
 #puts APP_ROOT
