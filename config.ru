@@ -19,7 +19,7 @@ Expedia.shared_secret = 'bUR9HreH'
 Expedia.locale = 'en_US'
 Expedia.currency_code = 'USD'
 Expedia.minor_rev = 13
-Mongoid.load!('config/mongoid.yml')
+#Mongoid.load!('config/mongoid.yml')
 
 #APP_ROOT = File.dirname(__FILE__)
 #puts APP_ROOT
