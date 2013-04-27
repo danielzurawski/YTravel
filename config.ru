@@ -1,7 +1,8 @@
 require "rubygems"
 require "log4r"
 require "json"
-require "sinatra"
+require 'sinatra'
+require 'sinatra/cross_origin'
 require "json"
 require "./lib/base/ytravel_controller"
 require "./lib/controllers/trip_controller"
@@ -9,9 +10,10 @@ require "./lib/controllers/landmark_controller"
 require "./lib/models/landmark"
 require "expedia"
 require "google_places"
-#require "mongoid"
-#require "geocoder"
 
+configure do
+  enable :cross_origin
+end
 
 Expedia.cid = 55505
 Expedia.api_key = '5xw4cpaxzfbm23w57x2d486j'
