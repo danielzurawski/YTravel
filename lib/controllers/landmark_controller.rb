@@ -23,6 +23,7 @@ module YTravel
 		def best_entries_for_period(data, start_date, end_date)
 			period = ((Date.new(end_date) - Date.new(start_date)) * 24) / 2;
 			data.sort_by { |hsh| hsh[:rating] }
+			puts "Taking " + period.to_s + " entries."
 			data.take(period)
 		end
 
