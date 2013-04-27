@@ -10,6 +10,7 @@ require "./lib/controllers/landmark_controller"
 require "./lib/models/landmark"
 require "expedia"
 require "google_places"
+require "sinatra-jsonp"
 
 configure do
   enable :cross_origin

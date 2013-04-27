@@ -1,7 +1,6 @@
 module YTravel
+	
 	class Controller < Sinatra::Base
-		
-		
 
 		before do
 			body_parameters = request.body.read
