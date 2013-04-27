@@ -2,14 +2,28 @@ module YTravel
 	class LandmarkController 
 	
 		def find_landmarks(data)
+			landmarks = Array.new
+			
 			@client = GooglePlaces::Client.new("AIzaSyBfQ0RtDqywSlAauWtPvNH_cwYpJdiN_T0")
-			landmark = Landmark.new(:address => data[:location])
-			landmark.save
-			puts 'location latitude: ' + landmark.latitude.to_s
-			puts 'location: ' + landmark.longitude.to_s
+			
+			puts 'latitutde: ' + data[:lat].to_s + ', long: ' + data[:long].to_s
+			
+			@client.spots(data[:lat], data[:long], :radius => 50000, :types => ['museum', 'establishment', 'art_gallery', 'cafe'], :exclude => ['airport', 'transit_station', 'bus_station'] 
+				).each {
+				|spot|
+				landmarks << {:lat => spot.lat, :long => spot.lng,
+							  :name => spot.name, :rating => spot.rating,
+							  :formatted_address => spot.formatted_address,
+							  :formatted_phone_number => spot.formatted_phone_number	}
+			}
 
-			@client.spots(landmark.latitude, landmark.longitude, 
-				:types => 'point_of_interest', :radius => 15000)
+			best_entries_for_period(landmarks, data[:start_date], data[:end_date])
+		end
+
+		def best_entries_for_period(data, start_date, end_date)
+			period = ((Date.new(end_date) - Date.new(start_date)) * 24) / 2;
+			data.sort_by { |hsh| hsh[:rating] }
+			data.take(period)
 		end
 
 		def find_expedia_landmarks(data)
@@ -18,7 +32,7 @@ module YTravel
 			date_end = Date.new(params[:end])
 			api = Expedia::Api.new
 			
-			entries = ((date_end - date_start) * 24) / 2;
+			
 			puts "Called find_landmarks with: " + data[:location]
 			
 			puts "Start date: " + date_start.to_s
