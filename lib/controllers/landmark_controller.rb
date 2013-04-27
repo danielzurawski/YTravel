@@ -9,7 +9,7 @@ module YTravel
 			
 			puts 'latitutde: ' + data[:lat].to_s + ', long: ' + data[:long].to_s
 			
-			@client.spots(data[:lat], data[:long], :radius => 50000, :types => ['museum', 'establishment', 'art_gallery', 'cafe'], :exclude => ['airport', 'transit_station', 'bus_station'] 
+			@client.spots(data[:lat], data[:long], :radius => 10000, :types => ['museum', 'establishment', 'art_gallery', 'cafe'], :exclude => ['airport', 'transit_station', 'bus_station'] 
 				).each {
 				|spot|
 				landmarks << {:lat => spot.lat, :long => spot.lng,
@@ -23,7 +23,7 @@ module YTravel
 
 		def best_entries_for_period(data, start_date, end_date)
 			if Time.at(end_date) > Time.at(start_date)
-				period = ((Time.at(end_date).to_date - Time.at(start_date).to_date).round * 24) / 2;
+				period = ((Time.at(end_date).to_date - Time.at(start_date).to_date).round * 24) / 4;
 				data.sort_by { |hsh| [hsh[:rating] ? 0 : 1,hsh[:rating] || 0] }
 				
 				#for i in 0..data.size
