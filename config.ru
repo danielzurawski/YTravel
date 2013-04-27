@@ -35,13 +35,13 @@ Expedia.minor_rev = 13
 # 	require File.basename(lib, '.*') 
 #}
 
-logger = Log4r::Logger.new "app"
-logger.outputters << Log4r::Outputter.stderr
+#logger = Log4r::Logger.new "app"
+#logger.outputters << Log4r::Outputter.stderr
 
-file = Log4r::FileOutputter.new('app-file', :filename => 'log/ytravel.log')
-file.formatter = Log4r::PatternFormatter.new(:pattern => "[%l] %d :: %m")
+#file = Log4r::FileOutputter.new('app-file', :filename => 'log/ytravel.log')
+#file.formatter = Log4r::PatternFormatter.new(:pattern => "[%l] %d :: %m")
 
-logger.outputters << file
+#logger.outputters << file
 
 run Sinatra::Application
 # Attach controllers
