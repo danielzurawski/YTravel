@@ -43,7 +43,7 @@ Expedia.minor_rev = 13
 
 use Rack::Cors do
 	allow do
-    	origins 'localhost:3000', '127.0.0.1:3000',
+    	origins 'localhost:3000', '127.0.0.1:3000', 'null',
              	/http:\/\/192\.168\.0\.\d{1,3}(:\d+)?/
              	# regular expressions can be used here
 
@@ -57,7 +57,7 @@ use Rack::Cors do
 
     allow do
 		origins '*'
-    	resource '/public/*', :headers => :any, :methods => :get
+    	resource '*', :headers => :any, :methods => [:get, :post]
 	end
 end
 
