@@ -9,8 +9,8 @@ require "./lib/controllers/landmark_controller"
 require "./lib/models/landmark"
 require "expedia"
 require "google_places"
-require "mongoid"
-require "geocoder"
+#require "mongoid"
+#require "geocoder"
 
 
 Expedia.cid = 55505
