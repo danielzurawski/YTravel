@@ -23,10 +23,11 @@ module YTravel
 				photo_url = ""
 				query_result = YahooApi.new.nearby_images(data[:city], spot.name)
 				puts 'landmark controller: query result content: ' + query_result.inspect
-				unless query_result.nil? || query_result["query"].nil?
+				unless query_result.nil? || query_result["query"].nil? || query_result["query"]["results"].nil?
+
 					query_result["query"]["results"]["size"].each {
 						|image|
-
+						puts "======> image, " + query_result["query"]["results"]["size"].inspect
 						if image["label"] == "Small"
 							photo_url = image["source"]
 							puts "acquired photo source: " + photo_url + ", for spot name: " + spot.name
