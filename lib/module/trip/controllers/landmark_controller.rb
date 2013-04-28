@@ -4,18 +4,23 @@ module YTravel
 	
 		def find_landmarks(data)
 			landmarks = Array.new
-			
-			@client = GooglePlaces::Client.new("AIzaSyBfQ0RtDqywSlAauWtPvNH_cwYpJdiN_T0")
+			@API_KEY = "AIzaSyBfQ0RtDqywSlAauWtPvNH_cwYpJdiN_T0"
+			@client = GooglePlaces::Client.new(@API_KEY)
 			
 			puts 'latitutde: ' + data[:lat].to_s + ', long: ' + data[:long].to_s
 			
 			@client.spots(data[:lat], data[:long], :radius => 10000, :types => ['museum', 'establishment', 'art_gallery', 'cafe'], :exclude => ['airport', 'transit_station', 'bus_station'] 
 				).each {
 				|spot|
+
+				unless spot.photos.first.nil?
+					photo = GoogleApi.new.get_photo(@API_KEY, spot.photos.first[:photo_reference])
+				end
+
 				landmarks << {:lat => spot.lat, :long => spot.lng,
 							  :name => spot.name, :rating => spot.rating,
 							  :formatted_address => spot.formatted_address,
-							  :formatted_phone_number => spot.formatted_phone_number	}
+							  :formatted_phone_number => spot.formatted_phone_number, :icon => spot.icon, :photo => photo }
 			}
 
 			best_entries_for_period(landmarks, data[:start_date], data[:end_date])
