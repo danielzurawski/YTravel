@@ -59,6 +59,14 @@ body {
 	width: 		300px;
 }
 
+#overlay {
+	position: 	absolute;
+	top: 		0px;
+	width: 		100%;
+	height: 	100%;
+	z-index: 	-1;
+}
+
 /*** ELEMENT STYLING ***/
 
 .search_input {

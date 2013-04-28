@@ -44,7 +44,7 @@ module YTravel
 							  :formatted_phone_number => spot.formatted_phone_number, :icon => spot.icon, :photo => photo_url}
 			}
 
-			#find_expedia_landmarks(data)
+			find_expedia_landmarks(data)
 
 			best_entries_for_period(landmarks, data[:start_date], data[:end_date])
 		end
@@ -78,7 +78,7 @@ module YTravel
 			landmarks = Array.new
 			api = Expedia::Api.new
 			
-			response = api.geo_search({:destinationString => data[:city], :type => 1, :latitude => data[:lat], :longitude => data[:long]})
+			response = api.get_list({:destinationString => data[:city], :type => 1, :latitude => data[:lat], :longitude => data[:long]})
 			puts "response for expedia landmarks: " + response.inspect
 			#response['LocationInfoResponse']['LocationInfos']['LocationInfo'].each { |landmark|
 

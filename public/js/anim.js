@@ -1,5 +1,6 @@
 var fadeIn;
 var fadeLoadOut;
+var overlayIn;
 Y.use('anim', function(Y) {
 
 	var fadeOut = new Y.Anim({
@@ -21,6 +22,11 @@ Y.use('anim', function(Y) {
 	    	  zIndex: -1 },
 	    duration: 2
 	});
+
+	overlayIn = new Y.Anim({
+		node: '#overlay',
+		to: { zIndex: 100}
+		});
 
 	fadeIn = new Y.Anim({
 	    node: '#map_screen_wrapper',

@@ -17,6 +17,9 @@ function initializeMap() {
 	map = new google.maps.Map(document.getElementById("map_container"),
 			mapOptions);
 	directionsDisplay.setMap(map);
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+    	overlayIn.run();
+   	}
 };
 
 function codeAddress() {
