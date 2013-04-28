@@ -17,9 +17,8 @@ class GoogleApi
 	def get_photo(key, photoreference)
 
 		#https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CoQBegAAAFg5U0y-iQEtUVMfqw4KpXYe60QwJC-wl59NZlcaxSQZNgAhGrjmUKD2NkXatfQF1QRap-PQCx3kMfsKQCcxtkZqQ&sensor=true&key=AddYourOwnKeyHere
-
-		uri = URI("http://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + 
-				photoreference + "&sensor=true&key=" + key)
+		uri = URI("http://maps.googleapis.com/maps/api/place/photo?maxwidth=400&maxheight=400&photoreference=" + 
+				photoreference + "&sensor=false&key=" + key)
 		res = Net::HTTP.get(uri)
 		#puts JSON.parse(res.force_encoding('UTF-8'))
 	end

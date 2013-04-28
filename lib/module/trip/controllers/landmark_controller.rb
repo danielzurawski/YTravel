@@ -14,14 +14,16 @@ module YTravel
 				).each {
 				|spot|
 
+				puts "spot photos: "
+				puts spot.photos.inspect
 				unless spot.photos.first.nil?
 					photo = Base64.strict_encode64(GoogleApi.new.get_photo(@API_KEY, spot.photos.first[:photo_reference]))
 				end
-
+				#:photo => photo 
 				landmarks << {:lat => spot.lat, :long => spot.lng,
 							  :name => spot.name, :rating => spot.rating,
 							  :formatted_address => spot.formatted_address,
-							  :formatted_phone_number => spot.formatted_phone_number, :icon => spot.icon, :photo => photo }
+							  :formatted_phone_number => spot.formatted_phone_number, :icon => spot.icon }
 			}
 
 			best_entries_for_period(landmarks, data[:start_date], data[:end_date])
