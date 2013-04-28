@@ -10,20 +10,39 @@ module YTravel
 			
 			puts 'latitutde: ' + data[:lat].to_s + ', long: ' + data[:long].to_s
 			
-			@client.spots(data[:lat], data[:long], :radius => 10000, :types => ['museum', 'establishment', 'art_gallery', 'cafe'], :exclude => ['airport', 'transit_station', 'bus_station'] 
+			@client.spots(data[:lat], data[:long], :radius => 10000, :types => ['museum', 'establishment', 'art_gallery', 'cafe'], :exclude => ['airport', 'transit_station', 'bus_station', 'hotel'] 
 				).each {
 				|spot|
 
-				puts "spot photos: "
-				puts spot.photos.inspect
-				unless spot.photos.first.nil?
-					photo = Base64.strict_encode64(GoogleApi.new.get_photo(@API_KEY, spot.photos.first[:photo_reference]))
+				#puts "spot photos: "
+				#puts spot.photos.inspect
+				#unless spot.photos.first.nil?
+					#photo = Base64.strict_encode64(GoogleApi.new.get_photo(@API_KEY, spot.photos.first[:photo_reference]))
+				#end
+				
+				photo_url = ""
+				query_result = YahooApi.new.nearby_images(data[:city], spot.name)
+				
+				unless query_result.nil? || query_result["query"].nil?
+					query_result["query"]["results"]["size"].each {
+						|image|
+						puts "results size each: " + image.inspect
+						if image["height"] == "75"
+							photo_url = image["source"]
+							puts "acquired photo source: " + photo_url + ", for spot name: " + spot.name
+							break
+						end
+					}
 				end
-				#:photo => photo 
+				
+
+				# photo_url = GoogleApi.new.google_search_image(spot.name)
+				# photo_url = photo_url[:results].first[:url]
+				
 				landmarks << {:lat => spot.lat, :long => spot.lng,
 							  :name => spot.name, :rating => spot.rating,
 							  :formatted_address => spot.formatted_address,
-							  :formatted_phone_number => spot.formatted_phone_number, :icon => spot.icon }
+							  :formatted_phone_number => spot.formatted_phone_number, :icon => spot.icon, :photo => photo_url}
 			}
 
 			best_entries_for_period(landmarks, data[:start_date], data[:end_date])

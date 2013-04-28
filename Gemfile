@@ -9,3 +9,6 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'google-api-client'
 #gem 'geocoder'
 #gem 'mongoid'
+gem 'googleajax'
+gem 'yql'
+gem "rack-timeout"
