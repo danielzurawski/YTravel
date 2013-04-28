@@ -1,4 +1,5 @@
 require 'date'
+require 'base64'
 module YTravel
 	class LandmarkController 
 	
@@ -14,7 +15,7 @@ module YTravel
 				|spot|
 
 				unless spot.photos.first.nil?
-					photo = GoogleApi.new.get_photo(@API_KEY, spot.photos.first[:photo_reference])
+					photo = Base64.strict_encode64(GoogleApi.new.get_photo(@API_KEY, spot.photos.first[:photo_reference]))
 				end
 
 				landmarks << {:lat => spot.lat, :long => spot.lng,
