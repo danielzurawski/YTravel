@@ -22,18 +22,18 @@ module YTravel
 				
 				photo_url = ""
 				#query_result = YahooApi.new.nearby_images(data[:city], spot.name)
-				puts 'landmark controller: query result content: ' + query_result.inspect
-				unless query_result.nil? || query_result["query"].nil? || query_result["query"]["results"].nil?
-
-					query_result["query"]["results"]["size"].each {
-						|image|
-
-						if image["label"] == "Medium"
-							photo_url = image["source"]
-							break
-						end
-					}
-				end
+				#puts 'landmark controller: query result content: ' + query_result.inspect
+				#unless query_result.nil? || query_result["query"].nil? || #query_result["query"]["results"].nil?
+#
+				#	query_result["query"]["results"]["size"].each {
+				#		|image|
+#
+				#		if image["label"] == "Medium"
+				#			photo_url = image["source"]
+				#			break
+				#		end
+				#	}
+				#end
 				
 				# photo_url = GoogleApi.new.google_search_image(spot.name)
 				# photo_url = photo_url[:results].first[:url]
