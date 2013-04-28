@@ -12,8 +12,7 @@ module YTravel
 			
 			@client.spots(data[:lat], data[:long], :radius => 10000, :types => ['museum', 'establishment', 'art_gallery', 'cafe'], :exclude => ['airport', 'transit_station', 'bus_station', 'hotel'] 
 				).each {
-				|spot|
-				puts "=====> spot inspect: " + spot.inspect
+					|spot|
 
 				#puts "spot photos: "
 				#puts spot.photos.inspect
@@ -27,8 +26,8 @@ module YTravel
 				unless query_result.nil? || query_result["query"].nil?
 					query_result["query"]["results"]["size"].each {
 						|image|
-						puts "------> results size each " + image.inspect
-						if image["height"] == "172"
+
+						if image["label"] == "Small"
 							photo_url = image["source"]
 							puts "acquired photo source: " + photo_url + ", for spot name: " + spot.name
 							break
