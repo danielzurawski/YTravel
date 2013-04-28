@@ -30,6 +30,9 @@ Y.use('calendar', 'anim', 'autocomplete', 'button', 'tabview', function(Y) {
 	    var button = new Y.Button({
 	        srcNode: '#search_submit'
 	    });
+	    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+	   	 	Y.one('#map_container').set('height', '80%');
+	   	}
 	});
 
 

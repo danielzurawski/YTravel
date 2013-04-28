@@ -27,16 +27,14 @@ module YTravel
 
 					query_result["query"]["results"]["size"].each {
 						|image|
-						
+
 						if image["label"] == "Medium"
 							photo_url = image["source"]
-							puts "acquired photo source: " + photo_url + ", for spot name: " + spot.name
 							break
 						end
 					}
 				end
 				
-
 				# photo_url = GoogleApi.new.google_search_image(spot.name)
 				# photo_url = photo_url[:results].first[:url]
 				
@@ -45,6 +43,8 @@ module YTravel
 							  :formatted_address => spot.formatted_address,
 							  :formatted_phone_number => spot.formatted_phone_number, :icon => spot.icon, :photo => photo_url}
 			}
+
+			#find_expedia_landmarks(data)
 
 			best_entries_for_period(landmarks, data[:start_date], data[:end_date])
 		end
@@ -76,23 +76,16 @@ module YTravel
 
 		def find_expedia_landmarks(data)
 			landmarks = Array.new
-			date_start = Date.new(params[:from])
-			date_end = Date.new(params[:end])
 			api = Expedia::Api.new
 			
-			
-			puts "Called find_landmarks with: " + data[:location]
-			
-			puts "Start date: " + date_start.to_s
-			puts "End date: " + date_start.to_s
+			response = api.geo_search({:destinationString => data[:city], :type => 1, :latitude => data[:lat], :longitude => data[:long]})
+			puts "response for expedia landmarks: " + response.inspect
+			#response['LocationInfoResponse']['LocationInfos']['LocationInfo'].each { |landmark|
 
-			response = api.geo_search({:destinationString => data[:location], :type => 2})
-			
-			response.body['LocationInfoResponse']['LocationInfos']['LocationInfo'].each { |landmark|
-					landmarks << {:description => landmark['description'], :latitude => landmark['latitude'], :longitude => landmark['longitude']}
-			}
+				#puts "======> Landmark : " + landmark.inspect
+					#landmarks << {:latitude => landmark['latitude'], :longitude => landmark['longitude']}
+			#}
 
-			landmarks
 		end
 	end
 
