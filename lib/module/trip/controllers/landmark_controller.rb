@@ -27,8 +27,8 @@ module YTravel
 
 					query_result["query"]["results"]["size"].each {
 						|image|
-						puts "======> image, " + query_result["query"]["results"]["size"].inspect
-						if image["label"] == "Small"
+						
+						if image["label"] == "Medium"
 							photo_url = image["source"]
 							puts "acquired photo source: " + photo_url + ", for spot name: " + spot.name
 							break
