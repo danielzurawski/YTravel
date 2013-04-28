@@ -4,10 +4,10 @@ require "json"
 require 'sinatra'
 require "json"
 require "./lib/base/ytravel_controller"
-require "./lib/controllers/trip_controller"
-require "./lib/controllers/landmark_controller"
-require "./lib/models/landmark"
-require "./lib/models/google_api"
+require "./lib/module/trip/controllers/trip_controller"
+require "./lib/module/trip/controllers/landmark_controller"
+require "./lib/module/trip/models/landmark"
+require "./lib/module/trip/models/google_api"
 require "expedia"
 require "google_places"
 require 'rack/cors'
@@ -43,6 +43,7 @@ Expedia.minor_rev = 13
 #file.formatter = Log4r::PatternFormatter.new(:pattern => "[%l] %d :: %m")
 
 #logger.outputters << file
+root = ::File.dirname(__FILE__)
 
 use Rack::Cors do
 	allow do
@@ -70,3 +71,18 @@ run Sinatra::Application
 map '/trip' do
   run YTravel::TripController
 end
+
+use Rack::Static, 
+  :urls => ["/images", "/js", "/css"],
+  :root => "public"
+
+run lambda { |env|
+  [
+    200, 
+    {
+      'Content-Type'  => 'text/html', 
+      'Cache-Control' => 'public, max-age=86400' 
+    },
+    File.open('public/index.html', File::RDONLY)
+  ]
+}
