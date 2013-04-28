@@ -16,7 +16,6 @@ class YahooApi
 		res = Net::HTTP.get(uri)
 		
 		json = JSON.parse(res)
-		puts "json from nearby images: " + json.to_s
 		json
 
 		#puts "Yahoo nearby images Net::HTTP response: " + res.inspect
