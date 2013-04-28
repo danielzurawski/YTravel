@@ -1,12 +1,8 @@
 @CHARSET "ISO-8859-1";
 
 body {
-
-}
-
-#header {
-	width: 		100%;
-	height: 	100px;
+	width:100%;
+   	height:100%;
 }
 
 #search_container {
@@ -16,7 +12,7 @@ body {
 	margin: 	auto;
 }
 
-#map_container {
+#map_screen_wrapper {
 	position: 	absolute;
 	top: 		0px;
 	width: 		100%;
@@ -24,6 +20,38 @@ body {
 	opacity: 	0;
 	border: 	1px solid #000000;
 	z-index: 	-1;
+}
+
+#loading_screen {
+	position: 	absolute;
+	top: 		0px;
+	text-align: center;
+	width: 		100%;
+	height: 	100%;
+	text-align: center;
+	opacity: 	0;
+	z-index: 	-1;
+}
+
+#map_container {
+	height: 	100%;
+}
+
+#itinerary_container {
+	height: 	100%;
+}
+
+#itinerary_text {
+	padding: 	10px;
+	width: 		100%;
+}
+
+#itinerary_photo {
+	position: 	relative;
+	padding: 	10px;
+	width: 		100%;
+	margin: 	auto;
+	text-align: center;
 }
 
 .calendar_select {
@@ -42,9 +70,34 @@ body {
 	margin-bottom: 10px;
 }
 
+.location_icon {
+	float: 		left;
+	margin: 	5px;
+}
+
+.location_photo {
+	overflow: 	none;
+	width: 		90%;
+}
+
+.location_photo img {
+	width: 		100px;
+}
+
+#map_container img { max-width: none; }
+
 /*** TEXT STYLING ***/
 
 .title {
 	font-size: 	30px;
-	font-style: bold;
+	font-style: bold
+}
+
+h1 {
+	display: 	inline;
+	text-align: center;
+}
+
+h1 a {
+	text-decoration:none;
 }

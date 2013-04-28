@@ -1,14 +1,32 @@
+var fadeIn;
+var fadeLoadOut;
 Y.use('anim', function(Y) {
 
 	var fadeOut = new Y.Anim({
 	    node: '#search_container',
-	    to: { opacity: 0}
+	    to: { opacity: 0 },
+	    duration: 2
 	});
 
-	var fadeIn = new Y.Anim({
-	    node: '#map_container',
+	var fadeLoadIn = new Y.Anim({
+	    node: '#loading_screen',
 	    to: { opacity: 100,
-	    	  zIndex: 99 }
+	    	  zIndex: 99},
+	    duration: 2
+	});
+
+	fadeLoadOut = new Y.Anim({
+	    node: '#loading_screen',
+	    to: { opacity: 0,
+	    	  zIndex: -1 },
+	    duration: 2
+	});
+
+	fadeIn = new Y.Anim({
+	    node: '#map_screen_wrapper',
+	    to: { opacity: 100,
+	    	  zIndex: 99 },
+	    duration: 2
 	});
 
 	var switchViews = function(e) {
@@ -19,12 +37,14 @@ Y.use('anim', function(Y) {
 
 	    e.preventDefault();
 	    fadeOut.run();
+	    fadeLoadIn.run();
 	    initializeMap();
-	    fadeIn.run();
 	    codeAddress();
 	};
 
-	Y.one('#search_submit').on('click', switchViews);
+	Y.on('domready', function() {
+		Y.one('#search_submit').on('click', switchViews);
+	});
 });
 
 function checkData() {

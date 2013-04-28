@@ -3,6 +3,8 @@ var map;
 var locations;
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
+var currentDay = 1;
+var markersArray = [];
 
 function initializeMap() {
 	geocoder = new google.maps.Geocoder();
@@ -25,7 +27,7 @@ function codeAddress() {
 		if (status == google.maps.GeocoderStatus.OK) {
 			map.setCenter(results[0].geometry.location);
 			getPlacesOfInterest(results[0].geometry.location.lat(),
-					results[0].geometry.location.lng(), Y.one(
+					results[0].geometry.location.lng(), address, Y.one(
 							'#calendarFromTxt').get('value'), Y.one(
 							'#calendarToTxt').get('value'));
 		} else {
@@ -36,64 +38,134 @@ function codeAddress() {
 };
 
 function drawLocations() {
-	var infoWindow = new google.maps.InfoWindow({
-		content : "holding"
-	});
+	clearMarkers();
+	var infoWindow = new google.maps.InfoWindow();
 
-	for ( var i = 0; i < locations.length; i++) {
+	var startindex = (currentDay - 1) * 6;
+	var endindex;
+	if (locations.length >= currentDay * 6)
+		endindex = currentDay * 6;
+	else
+		endindex = locations.length;
+
+	changeItineraryPhoto(startindex);
+	for ( var i = startindex; i < endindex; i++) {
 		var marker = new google.maps.Marker({
 			position : new google.maps.LatLng(locations[i].lat,
 					locations[i].long),
 			map : map,
 			title : locations[i].name,
-			html : locations[i].name + "<br/>" + "Rating: "
-					+ locations[i].rating
+			html : "<img src='" + locations[i].icon
+					+ "' class='location_icon'/>" + locations[i].name
+					+ "<br/>" + "Rating: " + locations[i].rating //+ "<img src='" + locations[i].photo + "' class='location_photo'>"
 		});
+		markersArray[markersArray.length] = marker;
 
-		if(i == 0) {
-			infoWindow = new google.maps.InfoWindow({
-				content : "holding"
-			});
+		if (i == startindex) {
+			infoWindow = new google.maps.InfoWindow();
 			infoWindow.setContent("Start: " + marker.html);
 			infoWindow.open(map, marker);
-		} else if(i == locations.length-1) {
-			infoWindow = new google.maps.InfoWindow({
-				content : "holding"
-			});
+		} else if (i == endindex-1) {
+			infoWindow = new google.maps.InfoWindow();
 			infoWindow.setContent("End: " + marker.html);
 			infoWindow.open(map, marker);
+		} else {
+			google.maps.event.addListener(marker, 'click', function() {
+				infoWindow.setContent(this.html);
+				infoWindow.open(map, this);
+			});
 		}
-		google.maps.event.addListener(marker, 'click', function() {
-			infoWindow.setContent(this.html);
-			infoWindow.open(map, this);
-		});
 	}
 	drawRoute();
 }
 
 function drawRoute() {
 
-	var start = new google.maps.LatLng(locations[0].lat, locations[0].long);
-	var end = new google.maps.LatLng(locations[locations.length-1].lat, locations[locations.length-1].long);
+	var startindex = (currentDay - 1) * 6;
+	var endindex;
+	if (locations.length >= currentDay * 6)
+		endindex = currentDay * 6 - 1;
+	else
+		endindex = locations.length - 1;
+
+	var start = new google.maps.LatLng(locations[startindex].lat,
+			locations[startindex].long);
+	var end = new google.maps.LatLng(locations[endindex].lat,
+			locations[endindex].long);
+
 	var waypts = [];
-	for (var i = 1; i < locations.length-1; i++) {
-		waypts.push(
-				{
-					location: new google.maps.LatLng(locations[i].lat, locations[i].long),
-					stopover: true
-				});
+
+	var startpoint = (currentDay - 1) * 6 + 1;
+	var endpoint;
+	if (locations.length > currentDay * 6)
+		endpoint = currentDay * 6 - 1;
+	else
+		endpoint = locations.length - 1;
+
+	for ( var i = startindex + 1; i < endindex; i++) {
+		waypts.push({
+			location : new google.maps.LatLng(locations[i].lat,
+					locations[i].long),
+			stopover : true
+		});
 	}
 
 	var request = {
-			origin : start,
-			destination : end,
-			waypoints: waypts,
-			optimizeWaypoints: true,
-			travelMode : google.maps.TravelMode.WALKING
-		};
-		directionsService.route(request, function(result, status) {
-			if (status == google.maps.DirectionsStatus.OK) {
-				directionsDisplay.setDirections(result);
-			}
-		});
+		origin : start,
+		destination : end,
+		waypoints : waypts,
+		optimizeWaypoints : true,
+		travelMode : google.maps.TravelMode.WALKING
+	};
+	directionsService.route(request, function(result, status) {
+		if (status == google.maps.DirectionsStatus.OK) {
+			directionsDisplay.setDirections(result);
+			drawRouteInstructions(result.routes[0].legs[0]);
+		}
+	});
+}
+
+function drawRouteInstructions(myRoute) {
+	var html = "<h1><button onClick='goDay(-1)' class='yui3-button'>back</button>" + " Day "
+			+ currentDay + " <button onClick='goDay(1)' class='yui3-button'>next</button></h1> "
+			+ "<h2>Landmarks:</h2><ol>";
+
+	var startindex = (currentDay - 1)*6;
+	var endindex;
+	if (locations.length >= currentDay*6)
+		endindex = currentDay * 6;
+	else
+		endindex = locations.length;
+
+	for ( var i = startindex; i < endindex; i++) {
+		html = html + "<li><a href='#' onClick='changeItineraryPhoto("+ i +")'>" + locations[i].name + "</a></li>";
+	}
+
+	html = html + "</ol><h2>Itinerary:</h2><ul>";
+
+	for ( var i = 0; i < myRoute.steps.length; i++) {
+		html = html + "<li>" + myRoute.steps[i].instructions + "</li>";
+	}
+	Y.one('#itinerary_text').setHTML(html + "</ul>");
+}
+
+function goDay(movement) {
+	if (movement == -1) {
+		if (!(currentDay > 1))
+			return;
+	} else if (!(locations.length > currentDay * 6))
+		return;
+
+	currentDay = currentDay + movement;
+	drawLocations();
+	drawRoute();
+}
+
+function clearMarkers() {
+	if (markersArray) {
+		for (i in markersArray) {
+			markersArray[i].setMap(null);
+		}
+		markersArray.length = 0;
+	}
 }

@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.10.0/build/cssfonts/cssfonts-min.css">
 <link rel="stylesheet" type="text/css"
 	href="http://yui.yahooapis.com/3.10.0/build/cssnormalize/cssnormalize-min.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.10.0/build/cssgrids/cssgrids-min.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.10.0/build/cssgrids-responsive/cssgrids-responsive-min.css">
 <link rel="stylesheet" type="text/css" href="css/template_css.css">
 
 <script src="http://yui.yahooapis.com/3.10.0/build/yui/yui-min.js"></script>
@@ -17,8 +20,8 @@
 </head>
 <body class="yui3-skin-sam">
 	<div id="search_container">
-		<div class="title">YTravel Hack</div>
-		<form id="location_search" action="#">
+		<div class="title"><img src="images/Yahoo_Y.png" height="100"><br/>Sightseeing Hack</div>
+		<form id="location_search">
 			<input type="text"
 				placeholder="Please enter the city you would like to visit"
 				size="50" class="search_input" id="search_location"/><br /> <br />
@@ -30,9 +33,21 @@
 				To: <input type="text" id="calendarToTxt">
 				<div id="calendarTo" class="calendar_style"></div>
 			</div>
-			<br /> <br /> <input type="submit" value="Find Itinerary!" id="search_submit"/>
+			<br /> <br />
+			<button id="search_submit" class="yui3-button">Find Itinerary!</button>
 		</form>
 	</div>
-	<div id="map_container"></div>
+	<div id="map_screen_wrapper" class="yui3-g-r">
+		<div id="map_container" class="yui3-u-4-5"></div>
+		<div id="itinerary_container" class="yui3-u-1-5">
+			<div id="itinerary_text"></div>
+			<div id="itinerary_photo"></div>
+		</div>
+	</div>
+	<div id="loading_screen">
+		<h1>Please wait a few moments, whilst we try to map<br/>
+		your best possible sightseeing itinerary.</h1><br/><br>
+		<img src="images/animated_computer.gif"/>
+	</div>
 </body>
 </html>
