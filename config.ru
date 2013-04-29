@@ -61,7 +61,7 @@ root = ::File.dirname(__FILE__)
 
 use Rack::Cors do
 	allow do
-    	origins 'ytravel.herokuapp.com' ,'localhost:3000', '127.0.0.1:3000',
+    	origins 'http://ytravel.herokuapp.com/' ,'localhost:3000', '127.0.0.1:3000',
              	/http:\/\/192\.168\.0\.\d{1,3}(:\d+)?/
              	# regular expressions can be used here
 
