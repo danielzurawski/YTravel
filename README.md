@@ -3,6 +3,9 @@ YTravel
 
 Yahoo! Hack Europe inspired sightseeing planner. 
 
+* Copyrights
+Joshua Wohle @JoshuaWohle, Daniel Zurawski @danielzurawski (Twitter - @danzurawski)
+
 # Dependencies
 * Ruby 1.9
 * Bundler - http://gembundler.com/
