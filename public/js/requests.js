@@ -1,4 +1,4 @@
-var uri = "http://frozen-woodland-9065.herokuapp.com/trip/plan";
+var uri = "http://ytravel.herokuapp.com/trip/plan";
 
 function getPlacesOfInterest(lat, long, city, startDate, endDate) {
 	var lat = lat;
