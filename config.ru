@@ -74,7 +74,7 @@ use Rack::Cors do
    	end
 
     allow do
-		origins '*'
+		origins '*', 'http://ytravel.herokuapp.com/', 'http://localhost:9292/'
     	resource '*', :headers => :any, :methods => [:get, :post]
 	end
 end
