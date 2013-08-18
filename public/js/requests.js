@@ -1,4 +1,5 @@
-var uri = "http://ytravel.herokuapp.com/trip/plan";
+// var uri = "http://ytravel.herokuapp.com/trip/plan";
+var uri = "http://localhost:9292/trip/plan";
 
 function getPlacesOfInterest(lat, long, city, startDate, endDate) {
 	var lat = lat;
@@ -18,7 +19,7 @@ function getPlacesOfInterest(lat, long, city, startDate, endDate) {
 }
 
 function populateLocations(data) {
-	locations = jQuery.parseJSON(data);
+	locations = jQuery.parseJSON(data).landmarks;
 	console.log(data);
 	drawLocations();
 	fadeLoadOut.run();

@@ -4,11 +4,10 @@ require "json"
 require 'sinatra'
 require "json"
 require "./lib/base/ytravel_controller"
-require "./lib/module/trip/models/landmark"
 require "./lib/module/trip/models/google_api"
 require "./lib/module/trip/models/yahoo_api"
+require "./lib/module/trip/models/landmark"
 require "./lib/module/trip/controllers/trip_controller"
-require "./lib/module/trip/controllers/landmark_controller"
 require "expedia"
 require "google_places"
 require 'rack/cors'
@@ -34,7 +33,6 @@ Expedia.shared_secret = 'bUR9HreH'
 Expedia.locale = 'en_US'
 Expedia.currency_code = 'USD'
 Expedia.minor_rev = 13
-#Mongoid.load!('config/mongoid.yml')
 
 #APP_ROOT = File.dirname(__FILE__)
 #puts APP_ROOT
