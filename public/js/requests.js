@@ -1,5 +1,5 @@
 // var uri = "http://ytravel.herokuapp.com/trip/plan";
-var uri = "http://localhost:9292/trip/plan";
+var uri = "http://ytravel.herokuapp.com/trip/plan";
 
 function getPlacesOfInterest(lat, long, city, startDate, endDate) {
 	var lat = lat;
