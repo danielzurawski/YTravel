@@ -20,7 +20,8 @@ module YTravel
 							  :name => spot.name, :rating => spot.rating,
 							  :formatted_address => spot.formatted_address,
 							  :formatted_phone_number => spot.formatted_phone_number, 
-							  :icon => spot.icon, :photo => (get_related_images_yboss(data[:city], spot.name) || '')}
+							  :icon => spot.icon, :photo => ''#(get_related_images_yboss(data[:city], spot.name) || '')
+							  }
 			}
 
 			sorted_landmarks = best_entries_for_period(landmarks, data[:start_date], data[:end_date])
